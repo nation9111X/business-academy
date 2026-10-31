@@ -276,7 +276,14 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 700; color: var(--i
 .meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 .8125rem var(--f-ui); color: var(--ink-3); }
 .meta span { display: inline-flex; gap: 6px; align-items: center; }
 .meta svg { width: 15px; height: 15px; }
-.article { min-width: 0; max-width: 720px; width: 100%; }
+/* Opaque reading surfaces keep the animated currency field in the margins.
+   Use palette tokens so explicit and system themes update without JS. */
+.article {
+  min-width: 0; max-width: 800px; width: 100%;
+  padding: clamp(14px, 3vw, 36px);
+  background: var(--sheet); border: 1px solid var(--rule);
+  border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow);
+}
 .prose { font: 400 var(--fs-body)/var(--lh-body) var(--f-body); color: var(--ink); }
 .prose > * { margin-block: 0; }
 .prose > * + * { margin-top: 1.05em; }
@@ -447,12 +454,12 @@ svg .axis { stroke: var(--ink-3); stroke-width: 1; }
 .nextprev b { font: 700 1.05rem/1.3 var(--f-display); }
 .nextprev .nx { text-align: right; grid-column: 2; }
 
-.toc { position: sticky; top: 84px; align-self: start; display: flex; flex-direction: column; gap: 14px; max-height: calc(100vh - 110px); overflow: auto; }
+.toc { position: sticky; top: 84px; align-self: start; display: flex; flex-direction: column; gap: 14px; max-height: calc(100vh - 110px); overflow: auto; padding: 18px; background: var(--sheet); border: 1px solid var(--rule); border-radius: calc(var(--radius) + 6px); }
 .toc nav { display: flex; flex-direction: column; border-left: 1px solid var(--rule); }
-.toc a { padding: 5px 0 5px 14px; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; font: 400 .85rem/1.35 var(--f-ui); color: var(--ink-3); }
+.toc a { padding: 5px 0 5px 14px; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; font: 400 .85rem/1.35 var(--f-ui); color: var(--ink-2); }
 .toc a:hover { color: var(--ink); }
 .toc a.on { color: var(--money); border-left-color: var(--money); }
-.toc .prog { font: 500 .78rem var(--f-ui); color: var(--ink-3); }
+.toc .prog { font: 500 .78rem var(--f-ui); color: var(--ink-2); }
 .toc .prog .bar { height: 3px; background: var(--sheet-2); border-radius: 9px; margin-top: 6px; overflow: hidden; }
 .toc .prog .bar i { display: block; height: 100%; background: var(--money); width: 0; }
 
@@ -761,6 +768,8 @@ input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px va
 @media print {
   .side, .top, .tabbar, .toasts, .btn { display: none !important; }
   .app { display: block; }
+  #bgfx { display: none !important; }
+  .article { max-width: none; padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
 }
 
 /* ---------- версия 2: дерево программы, панель шагов, настройки, истории в уроках, карточки урока ---------- */
